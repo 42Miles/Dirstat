@@ -7,6 +7,13 @@
 
 namespace fs = std::filesystem;
 
+int countLinesInFile(const std::string & file_path)
+{
+    std::ifstream inFile(file_path);
+    return std::count(std::istreambuf_iterator<char>(inFile),
+                      std::istreambuf_iterator<char>(), '\n');
+}
+
 std::vector<std::string> getDirFiles(const fs::path & dir)
 {
     std::vector<std::string> files;
@@ -25,7 +32,7 @@ int main()
     std::vector<std::string> f = getDirFiles(fs::current_path());
     for(const std::string &s: f)
     {
-    std::cout << s << std::endl;
+    std::cout << countLinesInFile(s) << std::endl;
     }
 
     return 0;
