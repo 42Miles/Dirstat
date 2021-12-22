@@ -15,13 +15,6 @@ int countLinesInFile(const std::string & file_path)
                       std::istreambuf_iterator<char>(), '\n');
 }
 
-int countWordsInFile(){
-    while(getline(lineStream, line, ' '))
-    {
-        ++numWords;
-    }
-}
-
 std::vector<std::string> getDirFiles(const fs::path & dir)
 {
     std::vector<std::string> files;
@@ -35,25 +28,23 @@ std::vector<std::string> getDirFiles(const fs::path & dir)
     return files;
 }
 
-//int getAllLines(const std::vector<std::string> & files)
-//{
-
-//}
-
-
-
-int main()
+int getAllLines(const std::vector<std::string> & files)
 {
-    std::vector<std::string> f;
-    std::thread first([&f] () { f = getDirFiles("/home/miles42/git/");});
-    first.join();
     unsigned int all_lines = 0;
-    for(const std::string &s: f)
+    for(const std::string &s: files)
     {
         all_lines += countLinesInFile(s);
     }
-    std::cout << all_lines << std::endl;
-    std::cout << f.size() << std::endl;
+}
+
+int main()
+{
+    std::vector<std::string> files;
+    std::thread first([&files] () { files = getDirFiles("/home/miles42/git/");});
+    first.join();
+
+    std::cout << getAllLines(files) << std::endl;
+    std::cout << files.size() << std::endl;
 
     return 0;
 }
