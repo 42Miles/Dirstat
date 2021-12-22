@@ -4,6 +4,7 @@
 #include <thread>
 #include <vector>
 #include <algorithm>
+#include <gtest/gtest.h>
 
 namespace fs = std::filesystem;
 
@@ -12,6 +13,13 @@ int countLinesInFile(const std::string & file_path)
     std::ifstream inFile(file_path);
     return std::count(std::istreambuf_iterator<char>(inFile),
                       std::istreambuf_iterator<char>(), '\n');
+}
+
+int countWordsInFile(){
+    while(getline(lineStream, line, ' '))
+    {
+        ++numWords;
+    }
 }
 
 std::vector<std::string> getDirFiles(const fs::path & dir)
@@ -27,13 +35,25 @@ std::vector<std::string> getDirFiles(const fs::path & dir)
     return files;
 }
 
+//int getAllLines(const std::vector<std::string> & files)
+//{
+
+//}
+
+
+
 int main()
 {
-    std::vector<std::string> f = getDirFiles(fs::current_path());
+    std::vector<std::string> f;
+    std::thread first([&f] () { f = getDirFiles("/home/miles42/git/");});
+    first.join();
+    unsigned int all_lines = 0;
     for(const std::string &s: f)
     {
-    std::cout << countLinesInFile(s) << std::endl;
+        all_lines += countLinesInFile(s);
     }
+    std::cout << all_lines << std::endl;
+    std::cout << f.size() << std::endl;
 
     return 0;
 }
