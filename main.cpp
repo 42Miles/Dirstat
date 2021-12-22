@@ -8,6 +8,13 @@
 
 namespace fs = std::filesystem;
 
+void getDir(std::string & directory)
+{
+    std::cout << "Enter directory name: ";
+    std::cin >> directory;
+    std::cout << "Fine!" << std::endl;
+}
+
 int countLinesInFile(const std::string & file_path)
 {
     std::ifstream inFile(file_path);
@@ -35,16 +42,33 @@ int getAllLines(const std::vector<std::string> & files)
     {
         all_lines += countLinesInFile(s);
     }
+    return all_lines;
+}
+
+inline bool isExistsing (const std::string& name) {
+  struct stat buffer;
+  return (stat (name.c_str(), &buffer) == 0);
+}
+
+void checkDirectory(std::string & directory)
+{
+
+    while(!isExistsing(directory))
+    {
+        std::cout << "Oh, looks like you entered the wrong directory name, please try again" << std::endl;
+        getDir(directory);
+    }
 }
 
 int main()
 {
+    std::string directory;
+    getDir(directory);
+    checkDirectory(directory);
     std::vector<std::string> files;
-    std::thread first([&files] () { files = getDirFiles("/home/miles42/git/");});
-    first.join();
-
-    std::cout << getAllLines(files) << std::endl;
-    std::cout << files.size() << std::endl;
+    files = getDirFiles(directory);
+    std::cout << "Number of lines: " << getAllLines(files) << std::endl;
+    std::cout << "Number of files: " << files.size() << std::endl;
 
     return 0;
 }
