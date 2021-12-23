@@ -3,10 +3,11 @@
 void Application::getDir(std::string &directory)
 {
     std::cout << "Enter directory name: " << std::endl;
-    std::cin >> directory;
+    //std::cin >> directory;
+    directory = "/home/miles42/git/";
 }
 
-int Application::countLinesInFile(const std::string &directory)
+unsigned int Application::countLinesInFile(const std::string &directory)
 {
     std::ifstream file(directory);
     return std::count(std::istreambuf_iterator<char>(file),
@@ -63,13 +64,20 @@ inline bool Application::isExistsing (const std::string& name)
   return (stat (name.c_str(), &buffer) == 0);
 }
 
-void Application::checkDirectory(std::string & directory)
+void Application::checkDirectory()
 {
     while(!isExistsing(directory))
     {
         std::cout << "Oh, looks like you entered the wrong directory name, please try again" << std::endl;
-        this->getDir(directory);
+        getDir(directory);
     }
+}
+
+void Application::printResult()
+{
+    std::cout << "Number of lines: " << this->getAllLines(files) << std::endl;
+    std::cout << "Empty lines: " << this->getAllEmptyLines(files) << std::endl;
+    std::cout << "Number of files: " << this->files.size() << std::endl;
 }
 
 Application::~Application()
@@ -80,15 +88,14 @@ Application::~Application()
 int main()
 {
     Application app;
-    std::string directory;
-    app.getDir(directory);
-    app.checkDirectory(directory);
-    std::vector<std::string> files = app.getDirFiles(directory);
+    app.getDir(app.directory);
+    app.checkDirectory();
+    std::vector<std::string> files = app.getDirFiles(app.directory);
 
-    app.getAllLines(files);
-    std::cout << "Number of lines: " << app.getAllLines(files) << std::endl;
-    std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
-    std::cout << "Number of files: " << files.size() << std::endl;
+    app.printResult();
+//    std::cout << "Number of lines: " << app.getAllLines(files) << std::endl;
+//    std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
+//    std::cout << "Number of files: " << files.size() << std::endl;
 
     return 0;
 }

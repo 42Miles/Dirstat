@@ -16,7 +16,7 @@ public:
 
     void getDir(std::string &directory);
 
-    int countLinesInFile(const std::string & directory);
+    unsigned int countLinesInFile(const std::string & directory);
 
     unsigned int countEmptyLinesInFile(const std::string & file_path);
 
@@ -28,15 +28,21 @@ public:
 
     inline bool isExistsing (const std::string& name);
 
-    void checkDirectory(std::string & directory);
+    void checkDirectory();
+
+    void printResult();
+
+    std::string directory;
 
     ~Application();
 
 private:
-    unsigned int all_lines = 0;
-    unsigned int emty_lines = 0;
-    unsigned int non_empty_lines = 0;
-    //std::string directory;
+
+    std::vector<std::string> files;
+
+    unsigned int all_lines;
+    unsigned int empty_lines;
+    unsigned int non_empty_lines;
 
 };
 
