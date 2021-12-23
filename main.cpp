@@ -3,8 +3,7 @@
 void Application::getDir(std::string &directory)
 {
     std::cout << "Enter directory name: " << std::endl;
-    //std::cin >> directory;
-    directory = "/home/miles42/git/";
+    std::cin >> directory;
 }
 
 unsigned int Application::countLinesInFile(const std::string &directory)
@@ -73,12 +72,12 @@ void Application::checkDirectory()
     }
 }
 
-void Application::printResult()
-{
-    std::cout << "Number of lines: " << this->getAllLines(files) << std::endl;
-    std::cout << "Empty lines: " << this->getAllEmptyLines(files) << std::endl;
-    std::cout << "Number of files: " << this->files.size() << std::endl;
-}
+//void Application::printResult()
+//{
+//    std::cout << "Number of lines: " << this->getAllLines(files) << std::endl;
+//    std::cout << "Empty lines: " << this->getAllEmptyLines(files) << std::endl;
+//    std::cout << "Number of files: " << this->files.size() << std::endl;
+//}
 
 Application::~Application()
 {
@@ -92,10 +91,10 @@ int main()
     app.checkDirectory();
     std::vector<std::string> files = app.getDirFiles(app.directory);
 
-    app.printResult();
-//    std::cout << "Number of lines: " << app.getAllLines(files) << std::endl;
-//    std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
-//    std::cout << "Number of files: " << files.size() << std::endl;
+//    app.printResult();
+    std::cout << "Number of lines: " << app.getAllLines(files) << std::endl;
+    std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
+    std::cout << "Number of files: " << files.size() << std::endl;
 
     return 0;
 }
