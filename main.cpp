@@ -1,28 +1,30 @@
-#include <iostream>
-#include <fstream>
-#include <filesystem>
-#include <thread>
-#include <vector>
-#include <algorithm>
-#include <gtest/gtest.h>
+#include "main.h"
 
-namespace fs = std::filesystem;
-
-void getDir(std::string & directory)
+void Application::getDir(std::string &directory)
 {
-    std::cout << "Enter directory name: ";
+    std::cout << "Enter directory name: " << std::endl;
     std::cin >> directory;
-    std::cout << "Fine!" << std::endl;
 }
 
-int countLinesInFile(const std::string & file_path)
+int Application::countLinesInFile(const std::string &directory)
 {
-    std::ifstream inFile(file_path);
-    return std::count(std::istreambuf_iterator<char>(inFile),
+    std::ifstream file(directory);
+    return std::count(std::istreambuf_iterator<char>(file),
                       std::istreambuf_iterator<char>(), '\n');
 }
 
-std::vector<std::string> getDirFiles(const fs::path & dir)
+unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
+{
+    unsigned int countEmpty = 0;
+    std::string text;
+    std::ifstream file(file_path);
+    while(std::getline(file, text))
+        if(!text.size())
+            countEmpty++;
+    return countEmpty;
+}
+
+std::vector<std::string> Application::getDirFiles(const fs::path & dir)
 {
     std::vector<std::string> files;
     for(auto & file: fs::recursive_directory_iterator(dir))
@@ -35,7 +37,7 @@ std::vector<std::string> getDirFiles(const fs::path & dir)
     return files;
 }
 
-int getAllLines(const std::vector<std::string> & files)
+unsigned int Application::getAllLines(const std::vector<std::string> & files)
 {
     unsigned int all_lines = 0;
     for(const std::string &s: files)
@@ -45,29 +47,47 @@ int getAllLines(const std::vector<std::string> & files)
     return all_lines;
 }
 
-inline bool isExistsing (const std::string& name) {
+unsigned int Application::getAllEmptyLines(const std::vector<std::string> & files)
+{
+    unsigned int all_empty_lines = 0;
+    for(const std::string &s: files)
+    {
+        all_empty_lines += countEmptyLinesInFile(s);
+    }
+    return all_empty_lines;
+}
+
+inline bool Application::isExistsing (const std::string& name)
+{
   struct stat buffer;
   return (stat (name.c_str(), &buffer) == 0);
 }
 
-void checkDirectory(std::string & directory)
+void Application::checkDirectory(std::string & directory)
 {
-
     while(!isExistsing(directory))
     {
         std::cout << "Oh, looks like you entered the wrong directory name, please try again" << std::endl;
-        getDir(directory);
+        this->getDir(directory);
     }
+}
+
+Application::~Application()
+{
+
 }
 
 int main()
 {
+    Application app;
     std::string directory;
-    getDir(directory);
-    checkDirectory(directory);
-    std::vector<std::string> files;
-    files = getDirFiles(directory);
-    std::cout << "Number of lines: " << getAllLines(files) << std::endl;
+    app.getDir(directory);
+    app.checkDirectory(directory);
+    std::vector<std::string> files = app.getDirFiles(directory);
+
+    app.getAllLines(files);
+    std::cout << "Number of lines: " << app.getAllLines(files) << std::endl;
+    std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
     std::cout << "Number of files: " << files.size() << std::endl;
 
     return 0;
