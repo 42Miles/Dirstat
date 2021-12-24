@@ -20,32 +20,21 @@ public:
 
     unsigned int countEmptyLinesInFile(const std::string & file_path);
 
-    std::vector<std::string> getDirFiles(const fs::path & dir);
+    /*std::vector<std::string>*/ void getDirFiles(const fs::path & dir);
 
     unsigned int getAllLines();
 
-    unsigned int getAllEmptyLines(const std::vector<std::string> & files);
+    unsigned int getAllEmptyLines();
 
-    inline bool isExistsing (const std::string& name);
+    inline bool isExistsing ();
 
     void checkDirectory();
 
     void printResult();
 
-
-
     std::string directory;
 
     ~Application();
-
-    const std::vector<std::string> &getFiles() const;
-    void setFiles(const std::vector<std::string> &newFiles);
-    unsigned int getAll_lines() const;
-    void setAll_lines(unsigned int newAll_lines);
-    unsigned int getEmpty_lines() const;
-    void setEmpty_lines(unsigned int newEmpty_lines);
-    unsigned int getNon_empty_lines() const;
-    void setNon_empty_lines(unsigned int newNon_empty_lines);
 
 private:
 

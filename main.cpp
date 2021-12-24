@@ -25,7 +25,7 @@ unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
     return countEmpty;
 }
 
-std::vector<std::string> Application::getDirFiles(const fs::path & dir)
+void Application::getDirFiles(const fs::path & dir)
 {
     for(auto & file: fs::recursive_directory_iterator(dir))
     {
@@ -34,7 +34,6 @@ std::vector<std::string> Application::getDirFiles(const fs::path & dir)
             files.push_back(file.path().string());
         }
     }
-    return files;
 }
 
 unsigned int Application::getAllLines()
@@ -47,7 +46,7 @@ unsigned int Application::getAllLines()
     return all_lines;
 }
 
-unsigned int Application::getAllEmptyLines(const std::vector<std::string> & files)
+unsigned int Application::getAllEmptyLines()
 {
     unsigned int all_empty_lines = 0;
     for(const std::string &s: files)
@@ -57,27 +56,27 @@ unsigned int Application::getAllEmptyLines(const std::vector<std::string> & file
     return all_empty_lines;
 }
 
-inline bool Application::isExistsing (const std::string& name)
+inline bool Application::isExistsing ()
 {
   struct stat buffer;
-  return (stat (name.c_str(), &buffer) == 0);
+  return (stat (directory.c_str(), &buffer) == 0);
 }
 
 void Application::checkDirectory()
 {
-    while(!isExistsing(directory))
+    while(!isExistsing())
     {
         std::cout << "Oh, looks like you entered the wrong directory name, please try again" << std::endl;
         getDir();
     }
 }
 
-//void Application::printResult()
-//{
-//    std::cout << "Number of lines: " << this->getAllLines(files) << std::endl;
-//    std::cout << "Empty lines: " << this->getAllEmptyLines(files) << std::endl;
-//    std::cout << "Number of files: " << this->files.size() << std::endl;
-//}
+void Application::printResult()
+{
+    std::cout << "Number of lines: " << this->getAllLines() << std::endl;
+    std::cout << "Empty lines: " << this->getAllEmptyLines() << std::endl;
+    std::cout << "Number of files: " << this->files.size() << std::endl;
+}
 
 Application::~Application()
 {
@@ -89,12 +88,8 @@ int main()
     Application app;
     app.getDir();
     app.checkDirectory();
-    std::vector<std::string> files = app.getDirFiles(app.directory);
+    app.getDirFiles(app.directory);
 
-//    app.printResult();
-    std::cout << "Number of lines: " << app.getAllLines() << std::endl;
-    std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
-    std::cout << "Number of files: " << files.size() << std::endl;
-
+    app.printResult();
     return 0;
 }
