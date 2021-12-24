@@ -22,9 +22,9 @@ public:
 
     void getDirFiles();
 
-    unsigned int getAllLines();
+    void getAllLines();
 
-    unsigned int getAllEmptyLines();
+    void getAllEmptyLines();
 
     inline bool isExistsing ();
 
@@ -32,7 +32,7 @@ public:
 
     void printResult();
 
-    std::string directory;
+    Application();
 
     ~Application();
 
@@ -40,9 +40,11 @@ private:
 
     std::vector<std::string> files;
 
+    std::string directory;
+
     unsigned int all_lines;
+
     unsigned int empty_lines;
-    unsigned int non_empty_lines;
 
 };
 

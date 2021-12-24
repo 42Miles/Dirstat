@@ -1,5 +1,12 @@
 #include "main.h"
 
+Application::Application()
+{
+    directory = "";
+    all_lines = 0;
+    empty_lines = 0;
+}
+
 void Application::getDir()
 {
     std::cout << "Enter directory name: " << std::endl;
@@ -25,7 +32,7 @@ unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
     return countEmpty;
 }
 
-void Application::getDirFiles(/*const fs::path & dir*/)
+void Application::getDirFiles()
 {
     for(auto & file: fs::recursive_directory_iterator(directory))
     {
@@ -36,24 +43,20 @@ void Application::getDirFiles(/*const fs::path & dir*/)
     }
 }
 
-unsigned int Application::getAllLines()
+void Application::getAllLines()
 {
-    unsigned int all_lines = 0;
     for(const std::string &s: files)
     {
         all_lines += countLinesInFile(s);
     }
-    return all_lines;
 }
 
-unsigned int Application::getAllEmptyLines()
+void Application::getAllEmptyLines()
 {
-    unsigned int all_empty_lines = 0;
     for(const std::string &s: files)
     {
-        all_empty_lines += countEmptyLinesInFile(s);
+        empty_lines += countEmptyLinesInFile(s);
     }
-    return all_empty_lines;
 }
 
 inline bool Application::isExistsing ()
@@ -73,9 +76,10 @@ void Application::checkDirectory()
 
 void Application::printResult()
 {
-    std::cout << "Number of lines: " << this->getAllLines() << std::endl;
-    std::cout << "Empty lines: " << this->getAllEmptyLines() << std::endl;
-    std::cout << "Number of files: " << this->files.size() << std::endl;
+    std::cout << "Number of lines: " << all_lines << std::endl;
+    std::cout << "Empty lines: " << empty_lines << std::endl;
+    std::cout << "Non-empty lines: " << all_lines - empty_lines << std::endl;
+    std::cout << "Number of files: " << files.size() << std::endl;
 }
 
 Application::~Application()
@@ -88,7 +92,9 @@ int main()
     Application app;
     app.getDir();
     app.checkDirectory();
-    app.getDirFiles(/*app.directory*/);
+    app.getDirFiles();
+    app.getAllLines();
+    app.getAllEmptyLines();
     app.printResult();
     return 0;
 }
