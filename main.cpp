@@ -27,7 +27,6 @@ unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
 
 std::vector<std::string> Application::getDirFiles(const fs::path & dir)
 {
-//    std::vector<std::string> files;
     for(auto & file: fs::recursive_directory_iterator(dir))
     {
         if(fs::is_regular_file(file))
@@ -38,7 +37,7 @@ std::vector<std::string> Application::getDirFiles(const fs::path & dir)
     return files;
 }
 
-unsigned int Application::getAllLines(const std::vector<std::string> & files)
+unsigned int Application::getAllLines()
 {
     unsigned int all_lines = 0;
     for(const std::string &s: files)
@@ -93,7 +92,7 @@ int main()
     std::vector<std::string> files = app.getDirFiles(app.directory);
 
 //    app.printResult();
-    std::cout << "Number of lines: " << app.getAllLines(files) << std::endl;
+    std::cout << "Number of lines: " << app.getAllLines() << std::endl;
     std::cout << "Empty lines: " << app.getAllEmptyLines(files) << std::endl;
     std::cout << "Number of files: " << files.size() << std::endl;
 

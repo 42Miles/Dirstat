@@ -22,7 +22,7 @@ public:
 
     std::vector<std::string> getDirFiles(const fs::path & dir);
 
-    unsigned int getAllLines(const std::vector<std::string> & files);
+    unsigned int getAllLines();
 
     unsigned int getAllEmptyLines(const std::vector<std::string> & files);
 
