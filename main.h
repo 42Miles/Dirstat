@@ -20,7 +20,7 @@ public:
 
     unsigned int countEmptyLinesInFile(const std::string & file_path);
 
-    /*std::vector<std::string>*/ void getDirFiles(const fs::path & dir);
+    void getDirFiles();
 
     unsigned int getAllLines();
 

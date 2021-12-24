@@ -25,9 +25,9 @@ unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
     return countEmpty;
 }
 
-void Application::getDirFiles(const fs::path & dir)
+void Application::getDirFiles(/*const fs::path & dir*/)
 {
-    for(auto & file: fs::recursive_directory_iterator(dir))
+    for(auto & file: fs::recursive_directory_iterator(directory))
     {
         if(fs::is_regular_file(file))
         {
@@ -88,8 +88,7 @@ int main()
     Application app;
     app.getDir();
     app.checkDirectory();
-    app.getDirFiles(app.directory);
-
+    app.getDirFiles(/*app.directory*/);
     app.printResult();
     return 0;
 }
