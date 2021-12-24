@@ -3,7 +3,7 @@
 void Application::getDir()
 {
     std::cout << "Enter directory name: " << std::endl;
-    //std::cin >> directory;
+//    std::cin >> directory;
     directory = "/home/miles42/git/";
 }
 
@@ -27,7 +27,7 @@ unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
 
 std::vector<std::string> Application::getDirFiles(const fs::path & dir)
 {
-    std::vector<std::string> files;
+//    std::vector<std::string> files;
     for(auto & file: fs::recursive_directory_iterator(dir))
     {
         if(fs::is_regular_file(file))

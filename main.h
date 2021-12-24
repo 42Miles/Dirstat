@@ -16,7 +16,7 @@ public:
 
     void getDir();
 
-    unsigned int countLinesInFile(const std::string & directory);
+    unsigned int countLinesInFile(const std::string & file_path);
 
     unsigned int countEmptyLinesInFile(const std::string & file_path);
 
