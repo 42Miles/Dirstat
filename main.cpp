@@ -1,9 +1,10 @@
 #include "main.h"
 
-void Application::getDir(std::string &directory)
+void Application::getDir()
 {
     std::cout << "Enter directory name: " << std::endl;
-    std::cin >> directory;
+    //std::cin >> directory;
+    directory = "/home/miles42/git/";
 }
 
 unsigned int Application::countLinesInFile(const std::string &directory)
@@ -68,7 +69,7 @@ void Application::checkDirectory()
     while(!isExistsing(directory))
     {
         std::cout << "Oh, looks like you entered the wrong directory name, please try again" << std::endl;
-        getDir(directory);
+        getDir();
     }
 }
 
@@ -87,7 +88,7 @@ Application::~Application()
 int main()
 {
     Application app;
-    app.getDir(app.directory);
+    app.getDir();
     app.checkDirectory();
     std::vector<std::string> files = app.getDirFiles(app.directory);
 

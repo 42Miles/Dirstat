@@ -14,7 +14,7 @@ namespace fs = std::filesystem;
 class Application{
 public:
 
-    void getDir(std::string &directory);
+    void getDir();
 
     unsigned int countLinesInFile(const std::string & directory);
 
@@ -32,9 +32,20 @@ public:
 
     void printResult();
 
+
+
     std::string directory;
 
     ~Application();
+
+    const std::vector<std::string> &getFiles() const;
+    void setFiles(const std::vector<std::string> &newFiles);
+    unsigned int getAll_lines() const;
+    void setAll_lines(unsigned int newAll_lines);
+    unsigned int getEmpty_lines() const;
+    void setEmpty_lines(unsigned int newEmpty_lines);
+    unsigned int getNon_empty_lines() const;
+    void setNon_empty_lines(unsigned int newNon_empty_lines);
 
 private:
 
