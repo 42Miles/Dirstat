@@ -16,3 +16,9 @@ add_executable(
 add_executable(
     test_list
     test/test_list.cpp)
+
+#Add src to the include directories in test_list.cpp
+target_include_directories(
+    test_list PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+    )
