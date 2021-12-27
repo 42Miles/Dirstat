@@ -1,32 +1,20 @@
-cmake_minimum_required(VERSION 3.5)
-
-project(Dirstat LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.9)
+project(Student CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#Main target
-add_executable(
-    Dirstat
-    src/main.cpp
-    src/main.h
-    )
+set(SOURCES src/dirstat.cpp)
+set(INCLUDES src/dirstat.hpp)
 
-#Test target
-add_executable(
-    test_list
-    test/test_list.cpp
-    )
+find_package(GTest REQUIRED)
 
-#Add src to the include directories into test_list.cpp
-target_include_directories(
-    test_list PRIVATE
-    "${CMAKE_CURRENT_SOURCE_DIR}/src"
-    )
+add_executable(dirstat src/main.cpp ${SOURCES})
+target_include_directories(dirstat PRIVATE ${INCLUDES})
 
-#Google Test
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
-)
+add_executable(test_list test/test_list.cpp ${SOURCES})
+target_include_directories(test_list PRIVATE ${INCLUDES})
+target_link_libraries(test_list GTest::GTest GTest::Main)
+
+enable_testing()
+include(GoogleTest)
+gtest_add_tests(TARGET test_list AUTO)
