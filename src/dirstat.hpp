@@ -7,7 +7,7 @@
 #include <thread>
 #include <vector>
 #include <algorithm>
-#include <gtest/gtest.h>
+#include <sys/stat.h>
 
 namespace fs = std::filesystem;
 
@@ -34,13 +34,15 @@ public:
 
     Application();
 
-    ~Application();
+    Application(std::string user_input);
 
-private:
+    ~Application();
 
     std::vector<std::string> files;
 
     std::string directory;
+
+private:
 
     unsigned int all_lines;
 
