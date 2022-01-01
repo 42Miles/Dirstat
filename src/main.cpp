@@ -3,11 +3,6 @@
 int main()
 {
     Application app;
-    app.getDir();
-    app.checkDirectory();
-    app.countDirFiles();
-    app.countAllLines();
-    app.countAllEmptyLines();
-    app.printResult();
+    app.start();
     return 0;
 }
