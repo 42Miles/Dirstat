@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef DIRSTAT_HPP
+#define DIRSTAT_HPP
 
 #include <iostream>
 #include <fstream>
@@ -8,19 +8,21 @@
 #include <vector>
 #include <algorithm>
 #include <sys/stat.h>
+#include <boost/asio/thread_pool.hpp>
+#include <boost/asio/post.hpp>
+#include <iterator>
+#include <sstream>
 
 namespace fs = std::filesystem;
 
 class Application{
 public:
 
+    void start();
+
     void getDir();
 
     void countDirFiles();
-
-    void countAllLines();
-
-    void countAllEmptyLines();
 
     inline bool isExistsing ();
 
@@ -41,6 +43,9 @@ public:
     unsigned int getAll_lines() const;
 
     unsigned int getEmpty_lines() const;
+
+    unsigned int getWords() const;
+
 private:
 
     std::vector<std::string> files;
@@ -51,9 +56,13 @@ private:
 
     unsigned int empty_lines;
 
+    unsigned int words;
+
     unsigned int countLinesInFile(const std::string & file_path);
 
     unsigned int countEmptyLinesInFile(const std::string & file_path);
+
+    unsigned int countWordsInFile(const std::string & file_path);
 };
 
-#endif // MAIN_H
+#endif // DIRSTAT_HPP
