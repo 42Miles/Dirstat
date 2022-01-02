@@ -46,6 +46,8 @@ public:
 
     unsigned int getWords() const;
 
+    unsigned int getLetters() const;
+
 private:
 
     std::vector<std::string> files;
@@ -58,11 +60,14 @@ private:
 
     unsigned int words;
 
+    unsigned int letters;
+
     unsigned int countLinesInFile(const std::string & file_path);
 
     unsigned int countEmptyLinesInFile(const std::string & file_path);
 
-    unsigned int countWordsInFile(const std::string & file_path);
+    unsigned int countWordsAndLettersInFile(const std::string & file_path);
+
 };
 
 #endif // DIRSTAT_HPP

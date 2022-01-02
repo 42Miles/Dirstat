@@ -6,6 +6,7 @@ Application::Application()
     all_lines = 0;
     empty_lines = 0;
     words = 0;
+    letters = 0;
 }
 
 Application::Application(std::string user_input)
@@ -14,6 +15,7 @@ Application::Application(std::string user_input)
     all_lines = 0;
     empty_lines = 0;
     words = 0;
+    letters = 0;
 }
 
 void Application::getDir()
@@ -67,7 +69,7 @@ unsigned int Application::countEmptyLinesInFile(const std::string & file_path)
     return countEmpty;
 }
 
-unsigned int Application::countWordsInFile(const std::string & file_path)
+unsigned int Application::countWordsAndLettersInFile(const std::string & file_path)
 {
     std::ifstream file(file_path);
 
@@ -75,14 +77,13 @@ unsigned int Application::countWordsInFile(const std::string & file_path)
     std::string word;
     unsigned int word_count = 0;
 
-// read file line by line
     while (getline(file, line)) {
 
     std::stringstream ss(line);
 
-    // extract all words from line
     while (ss >> word) {
         ++word_count;
+        letters += word.length();
     }
 }
     return word_count;
@@ -94,6 +95,7 @@ void Application::printResult()
     std::cout << "Empty lines: " << empty_lines << std::endl;
     std::cout << "Non-empty lines: " << all_lines - empty_lines << std::endl;
     std::cout << "Number of words: " << words << std::endl;
+    std::cout << "Number of Letters: " << letters << std::endl;
     std::cout << "Number of files: " << files.size() << std::endl;
 }
 
@@ -114,7 +116,8 @@ void Application::start()
     {
     boost::asio::post(pool, [=] { all_lines += countLinesInFile(s); });
     boost::asio::post(pool, [=] { empty_lines += countEmptyLinesInFile(s); });
-    boost::asio::post(pool, [=] { words += countWordsInFile(s); });
+    boost::asio::post(pool, [=] { words += countWordsAndLettersInFile(s); });
+    // boost::asio::post(pool, [=] { letters += countLettersInFile(s); });
     }
     printResult();
 
@@ -144,4 +147,9 @@ unsigned int Application::getEmpty_lines() const
 unsigned int Application::getWords() const
 {
     return words;
+}
+
+unsigned int Application::getLetters() const
+{
+    return letters;
 }
